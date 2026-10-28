@@ -30,5 +30,5 @@ target=root/'releases'/filename;target.parent.mkdir(exist_ok=True)
 if target.exists():assert target.read_bytes()==payload,'Published payloads are immutable; choose a new release version'
 target.write_bytes(payload)
 manifest={'schemaVersion':1,'releaseVersion':version,'publishedAt':release['publishedAt'],'payloadUrl':base+'releases/'+filename,'sha256':hashlib.sha256(payload).hexdigest(),'packCount':len(packs),'changelog':release['changelog']}
-(root/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(root/'manifest.json').write_bytes((json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
 print(f'Validated {len(packs)} packs; built maintenance release {version}.')

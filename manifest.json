@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "releaseVersion": "2026.10.28.2",
+  "releaseVersion": "2026.10.28.3",
   "publishedAt": "2026-10-28",
-  "payloadUrl": "https://raw.githubusercontent.com/xi15367/yingci-knowledge/main/releases/knowledge-2026.10.28.2.json",
-  "sha256": "40cfb9a34c9037387ed0c4e8047daa3e0b7e682d9adda572de5db1e8b0b8c623",
+  "payloadUrl": "https://raw.githubusercontent.com/xi15367/yingci-knowledge/main/releases/knowledge-2026.10.28.3.json",
+  "sha256": "db6a2d7822464e3a810b52030992d9a830a7de48426a635546aee95c6f4d2bef",
   "packCount": 18,
   "changelog": [
     "保留原九份条目，GPT图片库增强并保持内部ID及历史快照；新增九份闭源/平台兼容提示词知识包，总18份。",
