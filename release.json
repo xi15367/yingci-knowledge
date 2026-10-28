@@ -1,9 +1,11 @@
 {
-  "releaseVersion": "2026.10.28.1",
+  "releaseVersion": "2026.10.28.2",
   "publishedAt": "2026-10-28",
   "baseUrl": "https://raw.githubusercontent.com/xi15367/yingci-knowledge/main/",
   "changelog": [
-    "首次发布映词维护版知识库，包含 9 份图片、视频与 Codex 生图规则。",
-    "保留各模型的官方来源、核对日期、原生输出格式与示例。"
+    "保留原九份条目，GPT图片库增强并保持内部ID及历史快照；新增九份闭源/平台兼容提示词知识包，总18份。",
+    "新增开放类型、适用平台、任务和限制；区分Veo3.1停用的Gemini API Preview和平台可用版本。",
+    "独立gallery清单提供15个有署名图片/视频案例和离线预览；保留原示例型号，视频节选明确标注。",
+    "所有新目标只供编写提示词；图片生成和改图仍固定Codex，不接入其他平台生成接口。"
   ]
 }

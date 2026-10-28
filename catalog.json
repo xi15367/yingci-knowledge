@@ -1,18 +1,18 @@
 [
   {
     "id": "codex-image",
-    "name": "Codex 生图专用",
+    "name": "GPT 图片提示词",
     "category": "codex",
-    "modelVersion": "内置生图工具",
-    "packVersion": "2026.10.27.1",
-    "summary": "适配 Codex 内置生图工具，覆盖图片生成、参考图编辑和多轮修改。",
-    "tag": "默认生图",
+    "modelVersion": "GPT Image / Codex 内置工具",
+    "packVersion": "2026.10.28.2",
+    "summary": "GPT 图片生成、参考图编辑、文字排版与多轮修改；提示词可用 Codex 或 DeepSeek 编写。",
+    "tag": "GPT 图片",
     "order": 0,
     "defaultLanguage": "zh",
     "format": "text",
     "negativePrompt": false,
     "license": "随个人 Codex 账号使用",
-    "verifiedAt": "2026-10-27",
+    "verifiedAt": "2026-10-28",
     "sections": [
       {
         "title": "创作说明的骨架",
@@ -64,8 +64,15 @@
         ]
       },
       {
-        "title": "生图执行与检查",
-        "content": "实际调用内置 image_gen 工具。输入在本地的编辑目标先查看；检查主体、构图、文字和保持项。内置工具输出路径由运行时提供，软件负责回收原图；不将其他开源模型的 CFG、步数、采样器当作 Codex 参数。",
+        "title": "执行路径与检查",
+        "content": "编写提示词时只返回原生提示词正文，不调用生图工具。实际生图和改图由图片生成页固定经Codex执行；运行时提供原图路径，软件负责回收。检查主体、构图、文字与保持项，不把其他模型的CFG、步数或采样器写成Codex参数。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "多画面与执行边界",
+        "content": "单张、一次合并拼图和逐张独立原图需要明确区分。拼图写清格数、阅读顺序和共同主体；独立图逐项说明视角，并重复共同身份与基准参考。提示词只描述画面；API型号、质量和尺寸选项由实际平台设置，不将API参数当作Codex内置工具的可选项。",
         "modes": [
           "all"
         ]
@@ -73,12 +80,12 @@
     ],
     "sources": [
       {
-        "title": "Codex 官方生图说明",
-        "url": "https://learn.chatgpt.com/docs/image-generation"
+        "title": "OpenAI 官方图片提示指南",
+        "url": "https://developers.openai.com/api/docs/guides/image-prompting"
       },
       {
-        "title": "OpenAI 图片提示指南",
-        "url": "https://developers.openai.com/api/docs/guides/image-prompting"
+        "title": "Codex 官方生图说明",
+        "url": "https://learn.chatgpt.com/docs/image-generation"
       }
     ],
     "examples": [
@@ -93,14 +100,26 @@
         "body": "参考图 Image 1 为一只白色陶瓷杯的实拍图。改变：移除 Image 1 中的桌面和背景，只保留杯子和它的自然阴影。保留：杯子的形状、把手角度、表面高光和材质不变。约束：输出透明背景，alpha 通道真实有效，杯口内侧与背景交界处不出现白边或黑边。"
       }
     ],
-    "outputSchema": null
+    "outputSchema": null,
+    "openType": "closed",
+    "availablePlatforms": [
+      "Codex 内置 GPT 图片工具"
+    ],
+    "supportedTasks": [
+      "图片生成提示词",
+      "参考图编辑提示词",
+      "Codex图片生成与改图指导"
+    ],
+    "limitations": [
+      "提示词可由 Codex 或 DeepSeek 编写；实际生图和改图固定经 Codex 调用 GPT，不承诺底层工具型号可选。"
+    ]
   },
   {
     "id": "qwen-image-2-1",
     "name": "Qwen-Image 2.1",
     "category": "image",
     "modelVersion": "2.1",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "中文描述、文字、透明图片和多参考编辑。生成与编辑采用统一的模型知识库。",
     "tag": "通用与编辑",
     "order": 10,
@@ -154,14 +173,25 @@
         "body": "参考图按序号：图1是街角面包店的门面照片。在门面上方的空白招牌处添加文字“新鲜出炉”，文字放在引号内并保持清晰可读。保留图1中的建筑结构、门窗位置和光线方向，只增加招牌文字，不改变其他内容。"
       }
     ],
-    "outputSchema": null
+    "outputSchema": null,
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "图片生成",
+      "参考图编辑"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
   },
   {
     "id": "flux-3-image-klein",
     "name": "FLUX 3 Image Klein",
     "category": "image",
     "modelVersion": "3 Image Klein",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "生成、编辑、多参考与布局控制。适合把构图要求写得更具体。",
     "tag": "布局与控制",
     "order": 20,
@@ -215,14 +245,25 @@
         "body": "参考图是一张客厅照片。编辑范围：用归一化坐标[y_min, x_min, y_max, x_max]标出沙发区域约为[430, 280, 680, 720]，仅将该区域内的沙发布料改为墨绿色。保留项：沙发的位置、形状、褶皱和光影不变；地板、墙面、茶几、挂画和整体光线全部保留。约束：颜色变化自然，不溢出到沙发边缘之外。"
       }
     ],
-    "outputSchema": null
+    "outputSchema": null,
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "图片生成",
+      "参考图编辑"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
   },
   {
     "id": "fibo-2",
     "name": "Fibo 2.0",
     "category": "image",
     "modelVersion": "2.0 Dev / Edit Turbo",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "用结构化 VGL 表达场景与修改。分别说明生成、编辑和 Turbo 的使用边界。",
     "tag": "结构化创作",
     "order": 30,
@@ -333,14 +374,25 @@
         "artistic_style"
       ],
       "additionalProperties": true
-    }
+    },
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "图片生成",
+      "参考图编辑"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
   },
   {
     "id": "ideogram-4",
     "name": "Ideogram 4.0",
     "category": "image",
     "modelVersion": "4.0",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "为设计、文字和布局生成符合官方结构的 JSON，可直接提取使用。",
     "tag": "文字与设计",
     "order": 40,
@@ -457,14 +509,25 @@
         }
       },
       "additionalProperties": false
-    }
+    },
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "图片生成",
+      "参考图编辑"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
   },
   {
     "id": "minimax-h3",
     "name": "MiniMax H3",
     "category": "video",
     "modelVersion": "H3 FL2VA / Ref2VA",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "动作、镜头、台词与声音一起组织，区分首尾帧和多模态参考写法。",
     "tag": "优先推荐",
     "order": 50,
@@ -527,14 +590,25 @@
         "body": "Ref2VA 参考模式。subject_definitions：<Picture 1> 为角色A的参考形象，<Picture 2> 为角色B的参考形象，<Audio 1> 为环境音参考。summary：傍晚天台，两人并肩看城市灯光，A先开口，B回应。SHOT 1：中景，A转头说“你看，灯都亮了”，台词逐字引用。SHOT 2：近景，B笑着回答“是啊，刚好赶上”，镜头微微推进。Audio：<Audio 1> 的远处车流声，人物对白清晰。"
       }
     ],
-    "outputSchema": null
+    "outputSchema": null,
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
   },
   {
     "id": "ltx-2-5",
     "name": "LTX-2.5",
     "category": "video",
     "modelVersion": "2.5 Dev / Distilled",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "按时间展开动作、镜头和声音。覆盖文生视频、图生视频及首尾帧描述。",
     "tag": "优先推荐",
     "order": 60,
@@ -600,14 +674,25 @@
         "body": "The same courier in the yellow raincoat now walks her cargo bike slowly through the narrow alley instead of riding it. The camera begins on her boots splashing through shallow puddles, then tilts up to her calm face as she guides the handlebars past stacked crates. Warm lantern light spills across the wet stones, and the orange shop signs reflect in still water. She pauses to let a cat cross, then continues at an even pace, the bell silent this time. The camera drifts alongside her in a loose medium shot, then settles behind her as she reaches the alley's end. Rain falls steadily, softer than before, and the only sounds are the gentle tick of the freewheel, dripping gutters, and a low radio melody fading behind her."
       }
     ],
-    "outputSchema": null
+    "outputSchema": null,
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
   },
   {
     "id": "wan-2-2",
     "name": "Wan 2.2",
     "category": "video",
     "modelVersion": "2.2",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "成熟工作流的可选知识库，分别描述文生视频、图生视频与角色动画任务。",
     "tag": "成熟工作流",
     "order": 70,
@@ -665,14 +750,25 @@
         "body": "参考图是一面挂在木杆上的蓝色布旗，背景是海边礁石。围绕参考图中的运动和变化生成视频：主体为这面布旗。场景：清晨海边，薄雾未散。动作：海风逐渐增强，布旗从轻微摆动变为向一侧展开，旗角反复扬起又落下。运镜：镜头位置基本固定，仅缓慢向前推进。美学：冷蓝色调，自然光，保留参考图中的礁石与木杆位置不变。"
       }
     ],
-    "outputSchema": null
+    "outputSchema": null,
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
   },
   {
     "id": "kandinsky-6",
     "name": "Kandinsky 6.0",
     "category": "video",
     "modelVersion": "6.0 Lite / Pro",
-    "packVersion": "2026.10.27.1",
+    "packVersion": "2026.10.28.2",
     "summary": "音画生成的可选知识库，围绕动作、镜头、说话内容和参考条件组织说明。",
     "tag": "可选模型",
     "order": 80,
@@ -726,6 +822,659 @@
         "title": "改写结尾台词",
         "request": "把同一场景的结尾台词改成另一句，其余尽量保留。",
         "body": "场景：清晨的面包店柜台，布局与灯光保持不变。镜头：中景，固定机位。可观察动作：店员把纸袋递给顾客，顾客点头接过。声音：门铃、纸袋声、轻音乐与之前一致。结尾台词改为顾客说 <S>谢谢，明天我再来<E>。除此之外不改变人物位置和动作节奏。"
+      }
+    ],
+    "outputSchema": null,
+    "openType": "open-weights",
+    "availablePlatforms": [
+      "官方开放权重与对应兼容工作流（以许可和部署为准）"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件仅编写目标模型提示词；平台能力与附件上限分别确认。"
+    ]
+  },
+  {
+    "id": "nano-banana-2-1",
+    "name": "Nano Banana 2.1",
+    "category": "image",
+    "modelVersion": "gemini-nano-banana-2.1",
+    "packVersion": "2026.10.28.2",
+    "summary": "自然语言图片创作、文字版式和多参考编辑。",
+    "tag": "闭源提示词",
+    "order": 99,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "Gemini API / Google AI Studio（地区与账号能力以官方为准）"
+    ],
+    "supportedTasks": [
+      "图片生成提示词",
+      "参考图编辑提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "官方1K/2K/4K；同一工作流最多4个人物、10个物体的参考保真能力，不等于本软件附件数。"
+    ],
+    "sections": [
+      {
+        "title": "需求与画面",
+        "content": "本模型的原生提示词用自然语言：先写明画面用途与期望风格，再交代主体、场景、构图、光线和必要约束，避免堆叠参数。人物或物体特征要具体，背景与镜头关系要清楚；约束写成可检查的保留项与排除项。对话改图时说明保留部分和变化范围，使目标可核对。不混用其他模型参数语法，也不强制JSON。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "布局与文字",
+        "content": "画面内文字要逐字给出，并说明位置、层级、字体气质与对齐关系，避免让模型自行补写。利用文字排版增强时，仍要给出原文和版式目标；标题、正文、标注应区分优先级。需要多轮保持同一布局时，在后续对话中重申不可变元素，并检查文字是否漏字、错字或溢出。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考图与编辑",
+        "content": "多图参考要编号并说明每张图的角色，以及应保留的身份、风格或布局部分。官方模型最多接受14张参考图，其中人物一致性参考最多4个、物体最多10个；这是模型侧上限，不是软件上传上限，两者不要混写。编辑时写明修改目标、必须保留项和禁止改动范围，逐轮核对一致性。",
+        "modes": [
+          "image_edit"
+        ]
+      },
+      {
+        "title": "结果检查",
+        "content": "按所选的1K、2K或4K检查清晰度、边缘细节和整体可用性，不以放大代替原生输出。逐项核对主体数量、身份特征、构图位置、光线和约束是否落实；图片内文字要查原文、错漏、遮挡与溢出。多轮编辑后复查一致性，并确认修改未破坏保留项。结果需人工验收，不假定一次生成必然正确。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Nano Banana 2.1 官方资料",
+        "url": "https://ai.google.dev/gemini-api/docs/image-generation"
+      }
+    ],
+    "examples": [
+      {
+        "title": "构图与动作示例",
+        "request": "写一个陶瓷杯的创作提示词。",
+        "body": "一只深蓝色陶瓷杯位于浅灰桌面中央，柔和侧光照出釉面纹理，背景简洁，无文字。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "nano-banana-pro",
+    "name": "Nano Banana Pro",
+    "category": "image",
+    "modelVersion": "Gemini 3 Pro Image",
+    "packVersion": "2026.10.28.2",
+    "summary": "专业视觉简报、复杂版式、本地化文字及多轮编辑。",
+    "tag": "闭源提示词",
+    "order": 100,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "Gemini API / Google AI Studio（Gemini 3 Pro Image）"
+    ],
+    "supportedTasks": [
+      "图片生成提示词",
+      "参考图编辑提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "官方最多14张总参考，人物保真与物体保真指标不同；不要套用2.1的4人物/10物体上限。"
+    ],
+    "sections": [
+      {
+        "title": "需求与画面",
+        "content": "以自然语言写一份完整视觉简报：先说明画面用途、受众和期望风格，再描述主体特征、场景关系与需要体现的世界知识。涉及定位或本地化时，写明地区、语言和文化语境；涉及品牌一致性时，写清品牌元素及其关系。不要搬用2.1的思考档位、限制或接口参数，把要求落在可观察的画面上。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "布局与文字",
+        "content": "把主体、陪体、背景、文字区分别安排到明确位置，说明相对大小、遮挡关系和视觉动线，避免只写空泛的高级感。文字要给出原文、语言、层级、对齐与大致占位；品牌标识和标语要标明必须保留的关系。复杂画面先列主次，再写局部细节，使构图和文字都能逐项核对。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考图与编辑",
+        "content": "参考图按编号分配身份、风格或布局用途，逐张说明要借鉴什么、要保留什么，避免不同图片的职责重叠。编辑请求先写修改目标，再列必须保留的主体、文字、品牌关系和版式，并标明不可改动范围。涉及多张参考图协同时说明各图关系与优先级；不要套用其他型号的参考图数量或参数。",
+        "modes": [
+          "image_edit"
+        ]
+      },
+      {
+        "title": "结果检查",
+        "content": "检查画面是否服务既定用途，并核对主体特征、位置关系、品牌元素、本地化信息与文字原文是否准确。复杂场景要查主次是否清楚、世界知识是否恰当、局部是否互相矛盾。编辑后逐项确认保留项仍在、改动没有越界；文字与版式按实际需求验收。模型输出可能有误，不能因一次通过就视为必然正确。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Nano Banana Pro 官方资料",
+        "url": "https://ai.google.dev/gemini-api/docs/image-generation"
+      }
+    ],
+    "examples": [
+      {
+        "title": "构图与动作示例",
+        "request": "写一个陶瓷杯的创作提示词。",
+        "body": "一只深蓝色陶瓷杯位于浅灰桌面中央，柔和侧光照出釉面纹理，背景简洁，无文字。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "midjourney-v8-2",
+    "name": "Midjourney V8.2",
+    "category": "image",
+    "modelVersion": "V8.2",
+    "packVersion": "2026.10.28.2",
+    "summary": "原生 Imagine 提示词与 V8.2 新 Edit Model 的编辑边界。",
+    "tag": "闭源提示词",
+    "order": 101,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "Midjourney 网页 Imagine / Edit",
+      "Midjourney Discord"
+    ],
+    "supportedTasks": [
+      "图片生成提示词",
+      "参考图编辑提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "V8.2于2026-07-24成为默认；Edit Model取代旧参考工具，旧版参数不能直接移植。"
+    ],
+    "sections": [
+      {
+        "title": "主体与画面",
+        "content": "用清楚简洁的自然语言描述主体、环境、媒介、光线、色彩和构图。先写关键视觉，再补必要细节；不要将聊天式解释混进可复制的Imagine正文。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "版本与参数",
+        "content": "需要固定版本时在正文末尾写 --v 8.2；画幅使用所选平台支持的 --ar。参数放在描述之后，不套用SD的CFG、采样器或步数。HD、个性化和其他开关按当前版本兼容性确认，不自动添加参数。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "V8.2编辑",
+        "content": "V8.2提供新的Edit Model，替代旧Omni Reference、Character Reference和Retexture工具。编辑时明确目标区域、变化和保留项，通过当前Edit入口指定素材；不要自动输出旧 --oref 或 --cref 作为V8.2官方引用方案。",
+        "modes": [
+          "image_edit"
+        ]
+      },
+      {
+        "title": "文字与验收",
+        "content": "文字逐字加引号并说明位置、层级和期望字体气质。检查文字、主体数量和局部结构；个性化效果属于账号及平台设置，不当作提示词中的确定保证。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Midjourney V8.2 官方资料",
+        "url": "https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version"
+      }
+    ],
+    "examples": [
+      {
+        "title": "陶瓷杯摄影",
+        "request": "极简陶瓷杯产品图，横幅。",
+        "body": "A matte blue ceramic mug on a pale gray tabletop, soft window light from the left, clear handle silhouette, restrained product photography, generous negative space --ar 3:2 --v 8.2"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "seedream-5-0-pro",
+    "name": "Seedream 5.0 Pro",
+    "category": "image",
+    "modelVersion": "5.0 Pro",
+    "packVersion": "2026.10.28.2",
+    "summary": "多语言图文创作、空间标注、草图引导与交互编辑。",
+    "tag": "闭源提示词",
+    "order": 102,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "ByteDance Seed 官方体验入口 / 对应服务（型号可用性按平台确认）"
+    ],
+    "supportedTasks": [
+      "图片生成提示词",
+      "参考图编辑提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "不套用5.0 Lite或4.5的参考数量和参数；图层、空间标注需按实际平台入口操作。"
+    ],
+    "sections": [
+      {
+        "title": "需求与画面",
+        "content": "本模型按专业多模态图片创作来组织需求：用自然语言说明画面用途、主体、场景、构图和整体风格，并把图文对齐目标写清，例如哪些信息必须由图、文或标注承担。面向信息图时，先交代复杂数据或概念之间的关系，再说明希望读者按什么顺序理解。不要编造参考图数量、思考参数，也不把5.0 Lite、4.5的规则当作本型号官方要求。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "布局与文字",
+        "content": "复杂版式先划区域：主视觉、信息区、标注区、文字区分别说明范围与层级，再交代元素之间的对齐和阅读顺序。密集文字或数据转信息图时，给出原文、单位和分组关系，避免让模型自行改写。利用图层控制时，写清哪些层可调整、哪些关系必须锁定，便于后续编辑。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考图与编辑",
+        "content": "多张参考图要逐一编号，说明每张承担主体、风格、布局还是素材融合用途，并指出需要保留的局部。编辑时给出具体修改范围和保留项，涉及推理编辑时说明判断依据与期望变化，不写空泛的“优化一下”。多参考融合要排优先级；未提供可核实的参考图数量，不得编造上限或套用其他版本规则。",
+        "modes": [
+          "image_edit"
+        ]
+      },
+      {
+        "title": "结果检查",
+        "content": "按用途检查图文是否对齐、结构是否一致、文字是否准确，以及整体美感是否服务信息表达。信息图要核对数据、单位、分组和阅读顺序；多参考融合要查各图职责是否混淆、保留局部是否走样。编辑结果需确认修改范围准确、未误改保留项。模型输出并非必然正确，应保留人工复核。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Seedream 5.0 Pro 官方资料",
+        "url": "https://seed.bytedance.com/en/seedream5_0_pro"
+      }
+    ],
+    "examples": [
+      {
+        "title": "构图与动作示例",
+        "request": "写一个陶瓷杯的创作提示词。",
+        "body": "一只深蓝色陶瓷杯位于浅灰桌面中央，柔和侧光照出釉面纹理，背景简洁，无文字。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "seedance-2-5",
+    "name": "Seedance 2.5",
+    "category": "video",
+    "modelVersion": "2.5",
+    "packVersion": "2026.10.28.2",
+    "summary": "音画联合提示词、长叙事与参考控制；不沿用2.0语法。",
+    "tag": "闭源提示词",
+    "order": 103,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "火山方舟 / BytePlus / Seed 官方体验入口（按地区与账号确认）"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "官方单次最长30秒、可延长两次；素材语法及入口以2.5当前文档为准。"
+    ],
+    "sections": [
+      {
+        "title": "时长与音画同步",
+        "content": "Seedance 2.5 可按音视频一体来设计提示词，单次生成上限30秒，并允许在此基础上延长两次。写脚本时先定总时长，再把可观察的动作、时间变化、镜头运动和声音事件放进同一段描述，按时间轴标出声音与画面的对应关系，避免只堆风格词。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考视频的转译",
+        "content": "使用参考视频时，重点转述其构图关系、镜头运动和剪辑节奏，而不是复刻原片内容。把参考拆成主体位置、景别变化、运镜方向、切换点与声音线索，用可观察语言重写，先把握整体节奏，再落到局部动作，便于模型理解意图并完成增强编辑。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "调度与声音设计",
+        "content": "写白模、绿幕或表演调度时，要说明演员走位、肢体动作、镜头跟随和场景时间点，把调度写成可拍摄的连续动作；声音方面分别描述环境声、动作声和对白出现的位置，让画面与声音在同一时间轴上对齐，不要只写抽象情绪。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "代际语法边界",
+        "content": "不要把2.0时代的固定素材编号、数量上限或参数写法直接套到2.5；材料没有给出的数值不要补。需要参考素材时，用自然语言说明用途和关系，并把时长、延长次数与镜头计划分开写，避免混用不同代际的语法。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Seedance 2.5 官方资料",
+        "url": "https://seed.bytedance.com/en/seedance2_5"
+      },
+      {
+        "title": "火山方舟 Seedance 2.5 提示词指南",
+        "url": "https://docs.volcengine.com/docs/ark/seedance-2-5-prompt-guide?lang=en"
+      }
+    ],
+    "examples": [
+      {
+        "title": "连续产品短片",
+        "request": "陶瓷杯的安静展示短片。",
+        "body": "6秒连续产品镜头：青蓝色陶瓷杯静置浅灰台面，镜头从左前方缓慢移至正面，杯柄与釉面始终一致；柔和晨光，细微环境声，无对白。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "kling-4-0",
+    "name": "可灵 4.0",
+    "category": "video",
+    "modelVersion": "Kling 4.0",
+    "packVersion": "2026.10.28.2",
+    "summary": "大幅运动、连续长镜头与 Omni Reference 素材职责。",
+    "tag": "闭源提示词",
+    "order": 104,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "Kling AI 官方应用 / 网页（当前账号可用入口）"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "官方单次最长30秒，Omni Reference最多15份组合素材、10个关键帧；本软件附件上限不随官方指标增加。"
+    ],
+    "sections": [
+      {
+        "title": "运动与原生时长",
+        "content": "Kling 4.0 于2026年10月15日发布，官方原生单次最长30秒。描述大幅运动时，依次交代主体、运动方向、速度、镜头配合、节奏和前后连续性，让复杂运镜有明确起点、路径与落点；不要只写“快速运动”，而要把动作拆成可观察阶段。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考素材与关键帧",
+        "content": "Omni Reference 官方支持最多15份组合参考素材和最多10个关键帧，这是平台模型上限。编写提示词时应说明每份参考承担的角色，例如主体外观、场景风格或动作示例，并标出关键帧之间的变化关系；数量只是可用余地，别把堆满素材当作质量保证。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "连续动作编排",
+        "content": "处理长镜头或连续动作时，用时间顺序串联动作阶段，写清主体如何移动、镜头如何跟随、速度在哪一段改变，以及前后画面靠什么保持连贯。需要切换时明确切换点，并说明切换后的新空间与节奏，不要让多个动作在同一句里互相冲突。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "可灵 4.0 官方资料",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kling-ai-officially-launches-next-generation-kling-40-raising"
+      }
+    ],
+    "examples": [
+      {
+        "title": "连续跟拍",
+        "request": "骑行者转过街角。",
+        "body": "一个连续镜头：骑行者以平稳速度沿街道前进，镜头侧后方跟随，靠近街角时逐渐转向，始终保持同一骑行者、车辆和运动方向。清晨侧光，建筑关系连贯。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "gemini-omni-flash",
+    "name": "Gemini Omni Flash",
+    "category": "video",
+    "modelVersion": "gemini-omni-1.1-flash",
+    "packVersion": "2026.10.28.2",
+    "summary": "自然语言视频生成、对话编辑、延长及首尾帧。",
+    "tag": "闭源提示词",
+    "order": 105,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "Gemini API（Interactions API） / Google AI Studio"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "优先自然语言；API task字段是可选控制，不编造参数。英文充分支持，其他语言效果需实测。"
+    ],
+    "sections": [
+      {
+        "title": "多模态与单镜头",
+        "content": "Omni 支持原生图像、音频和视频输入，可生成视频、进行对话式编辑、延长片段并控制首尾帧。默认结果可能分成多个镜头；若要一镜到底，正文应写明 single continuous shot，并交代连续空间与动作，不要写成普通分镜列表。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "编辑与首尾帧",
+        "content": "编辑已有内容时，简短说明要改变什么、必须保留什么，并说明保留项为何重要，避免重述整段画面。图生视频应把重点放在主体动作、镜头运动和时序变化上，首尾帧则交代起点状态与终点状态，让模型知道中间需要补足的过程。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "语言与接口字段",
+        "content": "英文指令能得到充分支持，其他语言效果尚未评估；需要复现时优先用英文写自然提示。Interactions API 中 task 字段并非必需项，先写清目标、主体、动作与声音，再按接口需要选择字段，不要输出伪造的 JSON 参数或编造未给出的选项。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "负面要求与对白",
+        "content": "简单的负面要求可以直接写在正文，例如用 No dialogue 控制对白；更复杂的禁止项则改成正面可执行的画面描述，并说明希望出现的内容。需要角色说话时，标明说话者、语气、内容和出现时点，并让声音事件与画面动作对齐，减少歧义。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Gemini Omni Flash 官方资料",
+        "url": "https://ai.google.dev/gemini-api/docs/omni"
+      }
+    ],
+    "examples": [
+      {
+        "title": "一镜到底",
+        "request": "窗边猫咪，无对白的一镜到底短片。",
+        "body": "Single continuous shot, no scene cuts: a tabby cat rests on a sunlit windowsill. Its tail sways gently as the camera slowly approaches. Keep its fur pattern and the window layout consistent. Quiet breeze and distant birds, no dialogue."
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "runway-gen-4-5",
+    "name": "Runway Gen-4.5",
+    "category": "video",
+    "modelVersion": "Gen-4.5",
+    "packVersion": "2026.10.28.2",
+    "summary": "清楚直接的文生视频与图生视频运动提示词。",
+    "tag": "闭源提示词",
+    "order": 106,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "closed",
+    "availablePlatforms": [
+      "Runway Web（Standard及以上，按当前入口确认）"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "已核实T2V/I2V；2–10秒、720p、24/25fps；不能把未来新增输入写成现成功能。"
+    ],
+    "sections": [
+      {
+        "title": "入口与规格边界",
+        "content": "Gen-4.5 在网页端向 Standard 及以上方案开放，只覆盖文生视频和图生视频。官方给出的时长范围是2至10秒，输出720p、24或25fps；材料提到的未来输入方式尚未成为现成功能，先确认方案与入口可用，写提示词时不要预支这些能力。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "文生视频写法",
+        "content": "文生视频提示词要同时交代画面内容和运动：先定场景、主体与构图，再写主体动作、镜头运动、事件顺序和节奏，并标出节奏变化点。用清楚直接的自然语言，把连续事件拆成可观察阶段，避免堆叠空泛的风格形容词。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "图生视频写法",
+        "content": "图生视频以首帧为视觉锚点，重点描述接下来发生什么：主体如何移动、镜头是否推进或跟随、环境如何变化，以及动作的起止状态。不要重复描述图中已经清楚的外观，把篇幅留给运动路径、速度和连续性。",
+        "modes": [
+          "video_i2v",
+          "video_keyframes",
+          "video_reference"
+        ]
+      },
+      {
+        "title": "能力隔离",
+        "content": "不要照搬其他型号的参考帧、参考素材、音频生成或参数控制；Gen-4.5 当前只按文生视频和图生视频来写。需要复杂镜头时，用事件顺序和节奏词组织连续画面，但不要声称支持未列出的输入或输出规格，也不要替它补上未开放的能力。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Runway Gen-4.5 官方资料",
+        "url": "https://help.runwayml.com/hc/en-us/articles/46974685288467-Creating-with-Gen-4-5"
+      }
+    ],
+    "examples": [
+      {
+        "title": "运动与首帧",
+        "request": "让参考图中的陶瓷杯出现轻微蒸汽。",
+        "body": "The cup stays still while a thin stream of steam rises and gently disperses. The camera slowly pushes forward. Soft daylight remains steady, with continuous natural motion."
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "veo-3-1",
+    "name": "Veo 3.1 · 平台兼容",
+    "category": "video",
+    "modelVersion": "3.1（按平台区分）",
+    "packVersion": "2026.10.28.2",
+    "summary": "保留 Veo 3.1 原生提示词；明确 Gemini API Preview 已停止。",
+    "tag": "平台兼容",
+    "order": 107,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "闭源服务 · 使用及商用遵循所选平台条款",
+    "verifiedAt": "2026-10-28",
+    "openType": "compatibility",
+    "availablePlatforms": [
+      "Gemini Enterprise Agent Platform 的可用GA型号（按平台权限确认）",
+      "Gemini API 3.1 Preview：2026-10-22已停止"
+    ],
+    "supportedTasks": [
+      "文生视频提示词",
+      "图生视频提示词"
+    ],
+    "limitations": [
+      "本软件只生成提示词，不连接此平台执行图片或视频；最多10张图片用于理解需求，外部音视频素材需在目标平台另行上传。",
+      "旧Gemini API Preview已停止；保留历史兼容规则，不承诺当前所有平台均可调用。"
+    ],
+    "sections": [
+      {
+        "title": "先确认平台",
+        "content": "此条目保留Veo 3.1提示词兼容知识。Gemini API的veo-3.1-generate-preview、fast及lite预览版已于2026-10-22停止，不建议复制旧API示例继续调用。使用前确认目标平台提供的GA型号与权限，不把所有平台统一视为可用。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "画面与声音",
+        "content": "自然语言交代主体、场景、动作、镜头、光线与时间关系。分别写对白、环境声和动作声；逐字引用对白并标明说话者。限制冗长连续事件，按目标时长安排可完成的动作。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考与首尾帧",
+        "content": "官方指南记录图生视频、最多3张参考图、首尾帧插值与延长等能力；具体型号支持情况按目标平台确认。写清参考图是外观依据还是起始/结束画面，并描述中间运动与必须保持项。",
+        "modes": [
+          "video_i2v",
+          "video_keyframes",
+          "video_reference"
+        ]
+      },
+      {
+        "title": "负面与限制",
+        "content": "不要套用Omni的task选项或其他平台的参数。需要排除元素时用简洁的元素描述，按目标入口的negative prompt字段与平台支持填写；本软件默认只给自然语言正文。视频人物、文字、音画同步仍需逐项检查。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Veo 3.1 · 平台兼容 官方资料",
+        "url": "https://ai.google.dev/gemini-api/docs/veo"
+      }
+    ],
+    "examples": [
+      {
+        "title": "电影镜头兼容提示词",
+        "request": "黄昏海边灯塔，缓慢推进，无对白。",
+        "body": "A continuous slow push toward a lighthouse on a rocky coast at dusk. Warm light rotates over the water while waves roll against the rocks. Cool twilight, restrained cinematic composition. Audio: steady ocean waves and distant seabirds. No dialogue."
       }
     ],
     "outputSchema": null
