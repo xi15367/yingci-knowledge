@@ -1,0 +1,9 @@
+{
+  "releaseVersion": "2026.10.28.1",
+  "publishedAt": "2026-10-28",
+  "baseUrl": "https://raw.githubusercontent.com/xi15367/yingci-knowledge/main/",
+  "changelog": [
+    "首次发布映词维护版知识库，包含 9 份图片、视频与 Codex 生图规则。",
+    "保留各模型的官方来源、核对日期、原生输出格式与示例。"
+  ]
+}

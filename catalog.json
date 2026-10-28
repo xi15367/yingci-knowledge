@@ -1,0 +1,733 @@
+[
+  {
+    "id": "codex-image",
+    "name": "Codex 生图专用",
+    "category": "codex",
+    "modelVersion": "内置生图工具",
+    "packVersion": "2026.10.27.1",
+    "summary": "适配 Codex 内置生图工具，覆盖图片生成、参考图编辑和多轮修改。",
+    "tag": "默认生图",
+    "order": 0,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "随个人 Codex 账号使用",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "创作说明的骨架",
+        "content": "按用途、场景、主体、关键细节、构图、约束组织说明。复杂需求用短标签分段。需求已经具体时保留原意；宽泛需求可补充光线、视角、材质和留白，不添加无依据的人物、品牌、标语或故事。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "摄影与产品图",
+        "content": "写明拍摄对象、材质、可观察纹理、光源方向和机位。产品图强调轮廓、结构、标签、接触阴影与真实比例。需要自然摄影时使用日常环境和合理光线，按需求选择镜头语言，避免堆叠空泛的画质词。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "插画、海报与信息图",
+        "content": "插画明确媒介与画面动作；海报明确视觉层级和文案位置；信息图提供真实信息、阅读顺序、必要标签和布局。需要后期加字时明确留白；需要直接出字时逐字给出内容。不要添加用户没有提供的数据。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考图的职责",
+        "content": "按 Image 1、Image 2 编号，标明编辑目标、人物身份、产品、风格、构图或环境参考。说明各图之间的关系；参考风格时从颜色、材质、线条和光线描述。提供参考图不自动意味着修改原图。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "修改与保持项",
+        "content": "先写只改变什么，再写需要保持的人物身份、姿势、构图、颜色、光线、文字或产品几何。每次修改重申关键保持项。单次优先调整一个明确目标，保留原图，另存修改版本。",
+        "modes": [
+          "image_edit"
+        ]
+      },
+      {
+        "title": "图中文字",
+        "content": "文字用引号逐字给出，明确语言、大小写、字号层级、字体气质、颜色和位置。要求不添加其他文字。复杂排版分清标题、正文和标签，保留用户提供的真实内容。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "透明背景与一致性",
+        "content": "透明底明确要求真实 alpha 通道，不用棋盘格模拟。保留主体精细边缘和必要半透明结构。多轮角色或产品创作中重复身份、轮廓、颜色与关键细节，并明确参考图职责。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "生图执行与检查",
+        "content": "实际调用内置 image_gen 工具。输入在本地的编辑目标先查看；检查主体、构图、文字和保持项。内置工具输出路径由运行时提供，软件负责回收原图；不将其他开源模型的 CFG、步数、采样器当作 Codex 参数。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Codex 官方生图说明",
+        "url": "https://learn.chatgpt.com/docs/image-generation"
+      },
+      {
+        "title": "OpenAI 图片提示指南",
+        "url": "https://developers.openai.com/api/docs/guides/image-prompting"
+      }
+    ],
+    "examples": [
+      {
+        "title": "咖啡馆晨光海报",
+        "request": "生成一张用于咖啡店秋季新品的宣传海报。",
+        "body": "用途：咖啡店秋季新品宣传海报。场景：清晨靠窗的木质吧台，窗外有薄雾。主体：一杯冒着热气的拿铁，杯身有手绘枫叶图案，旁边放着一块肉桂卷。构图细节：拿铁位于画面右下三分线，左上留出标题空间，暖色侧逆光，浅景深。约束：画面干净，不出现品牌标识，不添加人物，文字留待后期排版。"
+      },
+      {
+        "title": "商品图透明背景",
+        "request": "把参考图中的杯子抠成透明背景，保留真实alpha。",
+        "body": "参考图 Image 1 为一只白色陶瓷杯的实拍图。改变：移除 Image 1 中的桌面和背景，只保留杯子和它的自然阴影。保留：杯子的形状、把手角度、表面高光和材质不变。约束：输出透明背景，alpha 通道真实有效，杯口内侧与背景交界处不出现白边或黑边。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "qwen-image-2-1",
+    "name": "Qwen-Image 2.1",
+    "category": "image",
+    "modelVersion": "2.1",
+    "packVersion": "2026.10.27.1",
+    "summary": "中文描述、文字、透明图片和多参考编辑。生成与编辑采用统一的模型知识库。",
+    "tag": "通用与编辑",
+    "order": 10,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "开放权重 · 以官方许可为准",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "自然语言说明",
+        "content": "清晰描述主体、动作、空间关系、构图、风格和光线。中文需求可直接用中文展开；不要套用旧扩散模型标签堆叠。图中文字逐字引用，并说明位置和排版。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "多图与修改",
+        "content": "按图像序号说明身份、产品、背景和风格参考。编辑时明确改变内容与保持项，逐一描述人物或物件，避免指代不清。模型支持最多10张参考图，软件任务仍应以实际附件为准。",
+        "modes": [
+          "image_edit"
+        ]
+      },
+      {
+        "title": "透明图与边界",
+        "content": "需要透明图时明确透明区域和主体边缘。生成、修改与提取主体使用不同的任务描述。只列官方明确支持的参数建议；不将其他 Qwen 版本的限制直接套入本版。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Qwen-Image-2.1 官方模型卡",
+        "url": "https://huggingface.co/Qwen/Qwen-Image-2.1"
+      },
+      {
+        "title": "官方发布",
+        "url": "https://qwen.ai/blog?id=qwen-image-2.1"
+      }
+    ],
+    "examples": [
+      {
+        "title": "书店角落插画",
+        "request": "生成一张温馨书店角落的插画。",
+        "body": "生成一张温馨的书店角落插画：木质书架从地面延伸到天花板，一位穿毛衣的读者坐在窗边椅上翻书，脚边趴着一只橘猫。画面用暖黄色灯光，窗外是傍晚的蓝色天空。书架侧面挂一块小木牌，上面写“今日推荐”，文字逐字保留引号内容。"
+      },
+      {
+        "title": "给参考图加文字",
+        "request": "在参考图的招牌上添加指定文字。",
+        "body": "参考图按序号：图1是街角面包店的门面照片。在门面上方的空白招牌处添加文字“新鲜出炉”，文字放在引号内并保持清晰可读。保留图1中的建筑结构、门窗位置和光线方向，只增加招牌文字，不改变其他内容。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "flux-3-image-klein",
+    "name": "FLUX 3 Image Klein",
+    "category": "image",
+    "modelVersion": "3 Image Klein",
+    "packVersion": "2026.10.27.1",
+    "summary": "生成、编辑、多参考与布局控制。适合把构图要求写得更具体。",
+    "tag": "布局与控制",
+    "order": 20,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "开放权重 · FLUX Kommunity License",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "主体与关系",
+        "content": "使用自然语言，优先写最重要的主体、动作、风格和环境，清楚表达主体间的关系。描述期望的画面；不要自动添加旧 FLUX 型号的参数或否定词模板。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "布局边框",
+        "content": "需要精确布局时，为元素给出描述和归一化边框。画布两轴均为0到1000，坐标顺序是[y_min,x_min,y_max,x_max]。上下、左右边界必须递增；不把它当成像素坐标。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "编辑与参考",
+        "content": "明确编辑范围与保留内容。多参考时分别说明人物、产品、风格、背景等职责。区别本地开放权重与托管 API 的附加处理能力，不承诺它们完全一致。",
+        "modes": [
+          "image_edit"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "FLUX 3 Image Klein 官方发布",
+        "url": "https://bfl.ai/blog/flux-3-image-klein"
+      },
+      {
+        "title": "官方模型页面",
+        "url": "https://bfl.ai/models/flux-3-image-klein"
+      }
+    ],
+    "examples": [
+      {
+        "title": "桌面静物布局",
+        "request": "生成一张俯拍桌面静物图，并给出主要物件的布局边框。",
+        "body": "生成一张俯拍的书桌静物图：中央是一台合上的笔记本电脑，左边放一杯水，右边放一盆小绿植。布局边框用0到1000归一化坐标，顺序为[y_min, x_min, y_max, x_max]。笔记本电脑约在[380, 300, 620, 700]，水杯约在[420, 120, 560, 240]，绿植约在[400, 760, 600, 900]。约束：桌面为浅木色，光线从左上方来，不出现多余杂物。"
+      },
+      {
+        "title": "限定区域换色",
+        "request": "只把参考图中的沙发改成墨绿色，其他保持不变。",
+        "body": "参考图是一张客厅照片。编辑范围：用归一化坐标[y_min, x_min, y_max, x_max]标出沙发区域约为[430, 280, 680, 720]，仅将该区域内的沙发布料改为墨绿色。保留项：沙发的位置、形状、褶皱和光影不变；地板、墙面、茶几、挂画和整体光线全部保留。约束：颜色变化自然，不溢出到沙发边缘之外。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "fibo-2",
+    "name": "Fibo 2.0",
+    "category": "image",
+    "modelVersion": "2.0 Dev / Edit Turbo",
+    "packVersion": "2026.10.27.1",
+    "summary": "用结构化 VGL 表达场景与修改。分别说明生成、编辑和 Turbo 的使用边界。",
+    "tag": "结构化创作",
+    "order": 30,
+    "defaultLanguage": "en",
+    "format": "json",
+    "negativePrompt": false,
+    "license": "开放权重 · 商业使用遵循 Bria 许可",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "VGL原生格式",
+        "content": "本地 Fibo 2.0 使用 VGL JSON。输出一个JSON对象，保留short_description、objects、background_setting、lighting、aesthetics、photographic_characteristics、style_medium、context、artistic_style。依据实际需求填写已核实字段；不确定的细分对象可为空，不发明私有字段。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "生成与编辑",
+        "content": "Dev可用于生成和编辑；Edit Turbo用于编辑，不能当作文生图模型。编辑说明写在edit_instruction，明确改变目标与保持项。最多4张参考图，采用<image_1>、<image_2>等序号说明关系。",
+        "modes": [
+          "image_edit"
+        ]
+      },
+      {
+        "title": "描述控制",
+        "content": "在short_description和对象description内写清主体、位置、材质、光线和动作。需要文字时逐字给出。自然语言到VGL的整理由本次Codex完成，不要求用户调用额外的第三方改写API。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "负面与参数",
+        "content": "生成与编辑的官方负面描述不同，编辑采用训练所用的空结构描述。不要套用通用负面词串。步数、引导与风格模板应与Dev/Turbo和所选工作流一致；当前任务没有指定工作流时只返回文字说明。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Fibo 2.0 Dev 官方模型卡",
+        "url": "https://huggingface.co/briaai/Fibo-2.0-dev"
+      },
+      {
+        "title": "Fibo 2.0 Edit Turbo 官方模型卡",
+        "url": "https://huggingface.co/briaai/Fibo-2.0-edit-turbo"
+      },
+      {
+        "title": "VGL 官方说明",
+        "url": "https://docs.bria.ai/vgl"
+      }
+    ],
+    "examples": [
+      {
+        "title": "雨夜街角的VGL描述",
+        "request": "雨夜街角，电影感摄影。",
+        "body": "{\"short_description\": \"A person with a clear umbrella walks past a warmly lit noodle shop on a rainy night.\", \"objects\": [{\"description\": \"A pedestrian holding a transparent umbrella, stepping around a puddle.\"}], \"background_setting\": \"A quiet city corner with wet asphalt reflecting red neon light.\", \"lighting\": {}, \"aesthetics\": {}, \"photographic_characteristics\": {}, \"style_medium\": \"photograph\", \"context\": \"A cinematic night street photograph.\", \"artistic_style\": \"Cool blue shadows with restrained warm red accents.\"}"
+      },
+      {
+        "title": "黄昏编辑说明",
+        "request": "保留参考图的街道结构，只把白天改成黄昏。",
+        "body": "{\"short_description\": \"The same street at dusk.\", \"objects\": [], \"background_setting\": \"The original street, buildings, pedestrians and cars retain their positions.\", \"lighting\": {}, \"aesthetics\": {}, \"photographic_characteristics\": {}, \"style_medium\": \"photograph\", \"context\": \"Edit Image 1, preserving geometry and composition.\", \"artistic_style\": \"A natural orange-purple dusk sky and warm low-angle light.\", \"edit_instruction\": \"Change only the time of day and lighting to dusk. Preserve every building, pedestrian and vehicle.\"}"
+      }
+    ],
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "short_description": {
+          "type": "string"
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "background_setting": {
+          "type": "string"
+        },
+        "lighting": {
+          "type": "object"
+        },
+        "aesthetics": {
+          "type": "object"
+        },
+        "photographic_characteristics": {
+          "type": "object"
+        },
+        "style_medium": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "artistic_style": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "short_description",
+        "objects",
+        "background_setting",
+        "lighting",
+        "aesthetics",
+        "photographic_characteristics",
+        "style_medium",
+        "context",
+        "artistic_style"
+      ],
+      "additionalProperties": true
+    }
+  },
+  {
+    "id": "ideogram-4",
+    "name": "Ideogram 4.0",
+    "category": "image",
+    "modelVersion": "4.0",
+    "packVersion": "2026.10.27.1",
+    "summary": "为设计、文字和布局生成符合官方结构的 JSON，可直接提取使用。",
+    "tag": "文字与设计",
+    "order": 40,
+    "defaultLanguage": "en",
+    "format": "json",
+    "negativePrompt": false,
+    "license": "开放权重 · 以官方许可为准",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "JSON原生结构",
+        "content": "输出可解析JSON，顶层按high_level_description、style_description、compositional_deconstruction排序。正文不要附加代码围栏、注释或解释。模型原生输入为结构化caption，普通自然语言需要先整理为JSON。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "风格字段顺序",
+        "content": "摄影依次使用aesthetics、lighting、photo、medium，可附color_palette。非摄影依次使用aesthetics、lighting、medium、art_style。颜色用明确的十六进制色值。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "构图与文字",
+        "content": "compositional_deconstruction包含background和elements。按官方示例给出元素type、desc和可选bbox；文字逐字引用，交代字体气质、层级和位置。bbox使用0至1000范围，保留官方坐标语义。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "本版任务范围",
+        "content": "本知识库服务于文生图及参考图转风格说明。不要将参考风格提取描述成模型原生局部编辑。以官方schema校验JSON，保持字段顺序和文字原样。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Ideogram 4 官方提示指南",
+        "url": "https://github.com/ideogram-oss/ideogram4/blob/main/docs/prompting.md"
+      },
+      {
+        "title": "Ideogram 4 官方介绍",
+        "url": "https://ideogram.ai/blog/ideogram-4.0/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "极简产品海报",
+        "request": "生成一张极简风格的耳机产品海报，输出Ideogram结构化JSON。",
+        "body": "{\"high_level_description\":\"极简风格的无线耳机产品海报，耳机居中放置，背景干净。\",\"style_description\":{\"aesthetics\":\"极简、现代、留白充足\",\"lighting\":\"柔和顶光，轻微轮廓光\",\"photo\":\"静物产品摄影，正面略俯视\",\"medium\":\"数字摄影\",\"color_palette\":\"米白、浅灰、哑光黑\"},\"compositional_deconstruction\":{\"background\":\"浅米色无缝背景，底部有柔和阴影\",\"elements\":[{\"type\":\"obj\",\"bbox\":[420,380,620,620],\"desc\":\"居中放置的哑光黑无线耳机\"},{\"type\":\"obj\",\"bbox\":[80,80,300,300],\"desc\":\"左上角小号留白区域，用于后期放置标题\"}]}}"
+      },
+      {
+        "title": "参考图重排构图",
+        "request": "参考现有海报，输出一张把主体移到右侧的结构化JSON。",
+        "body": "{\"high_level_description\":\"参考所给咖啡海报，将咖啡杯主体移到画面右侧，左侧留出文字区。\",\"style_description\":{\"aesthetics\":\"温暖、手作感、自然\",\"lighting\":\"窗边侧光，柔和阴影\",\"photo\":\"静物摄影，平视微俯\",\"medium\":\"数字摄影\",\"color_palette\":\"奶油白、焦糖棕、橄榄绿\"},\"compositional_deconstruction\":{\"background\":\"浅奶油色墙面与木质桌面交界\",\"elements\":[{\"type\":\"obj\",\"bbox\":[480,620,820,900],\"desc\":\"移到画面右侧的陶瓷咖啡杯，保留原有拉花\"},{\"type\":\"obj\",\"bbox\":[200,80,520,520],\"desc\":\"左侧留白区域，用于放置标题文字\"},{\"type\":\"obj\",\"bbox\":[760,640,940,860],\"desc\":\"咖啡杯旁的小碟与饼干，保持原相对位置\"}]}}"
+      }
+    ],
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "high_level_description",
+        "style_description",
+        "compositional_deconstruction"
+      ],
+      "properties": {
+        "high_level_description": {
+          "type": "string"
+        },
+        "style_description": {
+          "type": "object"
+        },
+        "compositional_deconstruction": {
+          "type": "object",
+          "required": [
+            "background",
+            "elements"
+          ],
+          "properties": {
+            "background": {
+              "type": "string"
+            },
+            "elements": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "desc": {
+                    "type": "string"
+                  },
+                  "bbox": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "id": "minimax-h3",
+    "name": "MiniMax H3",
+    "category": "video",
+    "modelVersion": "H3 FL2VA / Ref2VA",
+    "packVersion": "2026.10.27.1",
+    "summary": "动作、镜头、台词与声音一起组织，区分首尾帧和多模态参考写法。",
+    "tag": "优先推荐",
+    "order": 50,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "开放权重 · MiniMax H3 Community License",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "视频创作说明",
+        "content": "说明视频目标、主体、场景、动作、镜头、时间顺序和音频。对话逐字引用并指定说话者，声音区分台词、音效、环境声和音乐。多镜头用SHOT或CUT清楚分段，保持主体与场景指代一致。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "首尾帧模式FL2VA",
+        "content": "没有图像时写完整文生视频画面；一张图明确作为首帧还是尾帧；两张图明确开头和结尾，并描述中间如何变化。不虚构未提供的参考图。",
+        "modes": [
+          "video",
+          "video_i2v",
+          "video_keyframes"
+        ]
+      },
+      {
+        "title": "参考模式Ref2VA",
+        "content": "可用subject_definitions定义主体及素材，用summary说明任务，再写镜头和Audio。素材使用<Picture 1>、<Video 1>、<Audio 1>等标记，分别说明身份、动作、风格、场景或声音用途。未上传音视频时只依据用户给出的素材说明，不声称已经看过。",
+        "modes": [
+          "video_reference"
+        ]
+      },
+      {
+        "title": "开放版本与托管版本",
+        "content": "开放H3-Base与托管Context-IR、Regenerate-2K是不同环节。提示词库依据开放模型指南整理，不把托管增强步骤视为本地模型已经执行。优先保持参考关系、动作和台词明确。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "MiniMax H3 官方仓库与提示指南",
+        "url": "https://github.com/MiniMax-AI/MiniMax-H3"
+      },
+      {
+        "title": "官方H3资源与说明",
+        "url": "https://design.minimax.io/h3"
+      }
+    ],
+    "examples": [
+      {
+        "title": "晨跑转场",
+        "request": "用首尾帧模式生成一段晨跑视频。",
+        "body": "FL2VA 首尾帧模式。subject_definitions：<Picture 1> 为首帧，<Picture 2> 为尾帧，人物为同一名穿灰色运动服的跑者。summary：清晨公园跑道，跑者从起跑姿势变为冲过终点后停步。SHOT 1：首帧对应起跑，镜头跟随跑者侧面，环境有薄雾和树影。SHOT 2：尾帧对应停步，跑者弯腰扶膝，镜头拉远。Audio：清晨鸟鸣与轻微脚步声，无台词。"
+      },
+      {
+        "title": "参考角色对白",
+        "request": "用参考模式生成一段双人对话视频。",
+        "body": "Ref2VA 参考模式。subject_definitions：<Picture 1> 为角色A的参考形象，<Picture 2> 为角色B的参考形象，<Audio 1> 为环境音参考。summary：傍晚天台，两人并肩看城市灯光，A先开口，B回应。SHOT 1：中景，A转头说“你看，灯都亮了”，台词逐字引用。SHOT 2：近景，B笑着回答“是啊，刚好赶上”，镜头微微推进。Audio：<Audio 1> 的远处车流声，人物对白清晰。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "ltx-2-5",
+    "name": "LTX-2.5",
+    "category": "video",
+    "modelVersion": "2.5 Dev / Distilled",
+    "packVersion": "2026.10.27.1",
+    "summary": "按时间展开动作、镜头和声音。覆盖文生视频、图生视频及首尾帧描述。",
+    "tag": "优先推荐",
+    "order": 60,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "开放权重 · LTX Community License",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "一段有时序的描述",
+        "content": "英文正文以主要动作开头，用一个流畅段落按时间顺序写清动作、手势、外观、环境、镜头和光线变化。使用可观察的具体细节，控制在200英文词以内。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "声音与镜头",
+        "content": "描述人物说什么、声线和背景声，将声音与对应画面动作关联。多镜头明确剪辑点、主体与场景连续性，避免同一时刻互相冲突的镜头指令。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考图与关键帧",
+        "content": "图生视频围绕参考图中的主体运动和时间变化展开；需要保留身份、构图或材质时明确说明。首尾帧描述转变过程，不重复给出互相矛盾的主体外观。",
+        "modes": [
+          "video_i2v",
+          "video_keyframes"
+        ]
+      },
+      {
+        "title": "版本边界",
+        "content": "开放Dev、Distilled与托管Fast、Pro分开标识。能力和工作流以2.5官方资料为准，不沿用2.3的参数假设；没有明确工作流时不生成采样参数。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "LTX 官方仓库",
+        "url": "https://github.com/Lightricks/LTX-2"
+      },
+      {
+        "title": "官方提示指南",
+        "url": "https://ltx.io/blog/prompting-guide-for-ltx-2"
+      },
+      {
+        "title": "ComfyUI官方2.5工作流说明",
+        "url": "https://blog.comfy.org/p/ltx-25-day-0-support-in-comfyui"
+      }
+    ],
+    "examples": [
+      {
+        "title": "雨巷骑行",
+        "request": "生成一段雨中小巷骑行的视频。",
+        "body": "A young courier in a yellow raincoat pushes off from the curb and pedals a small cargo bike down a narrow alley, water spraying from the tires. The camera starts low behind the rear wheel, then rises smoothly to a side-tracking shot as she passes stacked crates and a steaming food stall. Rain streaks through the warm lantern light, and puddles mirror the orange glow of shop signs. She leans into a gentle turn, rings the bell twice, and smiles as a cat darts across the wet stones. The camera slows to a medium shot, holding on her face as droplets bead on the hood, while the alley's sounds—steady rain, a distant radio, the bell's echo—blend under a soft, muted ambience."
+      },
+      {
+        "title": "同一场景的慢节奏版本",
+        "request": "把雨巷骑行改写成更慢、更安静的版本。",
+        "body": "The same courier in the yellow raincoat now walks her cargo bike slowly through the narrow alley instead of riding it. The camera begins on her boots splashing through shallow puddles, then tilts up to her calm face as she guides the handlebars past stacked crates. Warm lantern light spills across the wet stones, and the orange shop signs reflect in still water. She pauses to let a cat cross, then continues at an even pace, the bell silent this time. The camera drifts alongside her in a loose medium shot, then settles behind her as she reaches the alley's end. Rain falls steadily, softer than before, and the only sounds are the gentle tick of the freewheel, dripping gutters, and a low radio melody fading behind her."
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "wan-2-2",
+    "name": "Wan 2.2",
+    "category": "video",
+    "modelVersion": "2.2",
+    "packVersion": "2026.10.27.1",
+    "summary": "成熟工作流的可选知识库，分别描述文生视频、图生视频与角色动画任务。",
+    "tag": "成熟工作流",
+    "order": 70,
+    "defaultLanguage": "zh",
+    "format": "text",
+    "negativePrompt": true,
+    "license": "开放权重 · Apache 2.0",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "基本结构",
+        "content": "按主体、场景、动作、运镜和美学组织提示词。主体外观和行为明确，动词描述可观察过程。中文或英文均以任务和工作流建议选择，不堆叠互相冲突的动作。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "文生视频",
+        "content": "描述完整场景、空间关系与动作的开始、变化和结束。需要镜头运动时交代方向、速度与跟随对象，保持单个镜头内的逻辑连贯。",
+        "modes": [
+          "video"
+        ]
+      },
+      {
+        "title": "图生视频",
+        "content": "以参考图已有内容为起点，重点描述运动、表情、镜头和环境变化。明确哪些主体与构图保持稳定；不要把图生视频写成完全替换参考图的静态画面。",
+        "modes": [
+          "video_i2v",
+          "video_keyframes"
+        ]
+      },
+      {
+        "title": "Animate与声音驱动",
+        "content": "Animate、S2V与T2V/I2V是不同任务。采用对应官方工作流时，分别说明角色、驱动素材、运动和保持项。没有声音输入与工作流时不承诺音画生成。",
+        "modes": [
+          "video_reference"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Wan2.2 官方仓库",
+        "url": "https://github.com/Wan-Video/Wan2.2"
+      }
+    ],
+    "examples": [
+      {
+        "title": "沙漠驼队",
+        "request": "生成一段沙漠驼队行走的视频。",
+        "body": "主体：一支由五匹骆驼组成的驼队，领队牵着第一匹。场景：黄昏的沙漠沙丘，天空有橙红渐变和薄云。动作：驼队沿沙脊缓慢前行，骆驼步伐沉稳，沙粒从蹄边滑落。运镜：镜头从低角度侧面跟拍，随后缓缓升高为广角远景。美学：暖金色调，画面简洁，有电影感颗粒。"
+      },
+      {
+        "title": "参考图中的旗帜飘动",
+        "request": "围绕参考图中的场景生成运动变化。",
+        "body": "参考图是一面挂在木杆上的蓝色布旗，背景是海边礁石。围绕参考图中的运动和变化生成视频：主体为这面布旗。场景：清晨海边，薄雾未散。动作：海风逐渐增强，布旗从轻微摆动变为向一侧展开，旗角反复扬起又落下。运镜：镜头位置基本固定，仅缓慢向前推进。美学：冷蓝色调，自然光，保留参考图中的礁石与木杆位置不变。"
+      }
+    ],
+    "outputSchema": null
+  },
+  {
+    "id": "kandinsky-6",
+    "name": "Kandinsky 6.0",
+    "category": "video",
+    "modelVersion": "6.0 Lite / Pro",
+    "packVersion": "2026.10.27.1",
+    "summary": "音画生成的可选知识库，围绕动作、镜头、说话内容和参考条件组织说明。",
+    "tag": "可选模型",
+    "order": 80,
+    "defaultLanguage": "en",
+    "format": "text",
+    "negativePrompt": false,
+    "license": "开放权重 · MIT",
+    "verifiedAt": "2026-10-27",
+    "sections": [
+      {
+        "title": "可观察的动作与声音",
+        "content": "简洁说明场景、主体、具体动作、镜头和光线。声音与动作对应，分别描述台词与环境声。说话内容使用官方示例的<S>台词<E>标记，避免把未指定的语言或声音写入需求。",
+        "modes": [
+          "all"
+        ]
+      },
+      {
+        "title": "参考条件",
+        "content": "有参考图时说明它是起始画面还是首尾帧；围绕主体运动和变化展开。音频或视频驱动任务以官方已发布的调用模式为准；提示词说明素材职责，不声称软件已执行视频生成。",
+        "modes": [
+          "video_i2v",
+          "video_keyframes",
+          "video_reference"
+        ]
+      },
+      {
+        "title": "知识范围",
+        "content": "Lite、Pro和蒸馏版本区分记录；用户没有指定工作流时不编造步数、分辨率或接口参数。官方近期新增能力需要核对后以独立知识版本更新。",
+        "modes": [
+          "all"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Kandinsky 6 官方仓库",
+        "url": "https://github.com/kandinskylab/kandinsky-6"
+      },
+      {
+        "title": "官方模型介绍",
+        "url": "https://www.kandinskylab.ai/models/video/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "面包店问候",
+        "request": "生成一段面包店店员问候顾客的短视频。",
+        "body": "场景：清晨的面包店柜台，木质货架上摆着刚出炉的面包。镜头：中景，固定机位，轻微手持感。可观察动作：店员抬头看向门口，微笑并招手；顾客推门进入，门铃轻响。声音：门铃声、纸袋摩擦声、店内轻音乐。店员说 <S>早上好，刚出炉的可颂在这边<E>。"
+      },
+      {
+        "title": "改写结尾台词",
+        "request": "把同一场景的结尾台词改成另一句，其余尽量保留。",
+        "body": "场景：清晨的面包店柜台，布局与灯光保持不变。镜头：中景，固定机位。可观察动作：店员把纸袋递给顾客，顾客点头接过。声音：门铃、纸袋声、轻音乐与之前一致。结尾台词改为顾客说 <S>谢谢，明天我再来<E>。除此之外不改变人物位置和动作节奏。"
+      }
+    ],
+    "outputSchema": null
+  }
+]
