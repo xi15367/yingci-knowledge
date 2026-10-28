@@ -1,0 +1,2 @@
+* text=auto eol=lf
+releases/*.json -text
