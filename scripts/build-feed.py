@@ -16,6 +16,9 @@ for pack in packs:
         assert isinstance(pack.get(key),str) and pack[key].strip(),f'{key} is required'
     assert re.fullmatch(r'[a-zA-Z0-9_-]{1,100}',pack['id']) and pack['id'] not in ids
     ids.add(pack['id'])
+    for key in ['recommendationVersion','rulesVersion']:
+        if key in pack:
+            assert isinstance(pack[key],str) and pack[key].strip(),f'{key} must be a nonempty string'
     assert pack['category'] in ['codex','image','video'] and pack['format'] in ['text','json']
     assert 0<len(pack['sections'])<=50 and all(s.get('title') and s.get('content') for s in pack['sections'])
     assert 0<len(pack['sources'])<=30
